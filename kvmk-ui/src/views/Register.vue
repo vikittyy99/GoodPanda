@@ -63,7 +63,8 @@
   </template>
 
   <script>
-  import UsersService from "@/services/users-service";
+ /* import UsersService from "@/services/users-service";*/
+ import RecipeService from '../services/recipe-service'
 
   export default {
     name: 'User',
@@ -87,7 +88,7 @@
           confirmpassword: this.confirmpassword,
 
         }
-        UsersService.register(form).then(
+        RecipeService.register(form).then(
             response => {
               this.name = "";
               this.email = "";

@@ -21,7 +21,7 @@
               </div>
               <div class="form-group">
                 <label class="form-control-label">PASSWORD</label>
-                <input type="password" v-model="password" class="form-control" i>
+                <input type="password" v-model="password" class="form-control">
               </div>
 
               <div class="col-lg-12 loginbttm">
@@ -43,9 +43,10 @@
 
 <script>
 
-
-import UsersService from "@/services/users-service";
-
+/*
+import UsersService from "@/services/users-service";*/
+import RecipeService from '../services/recipe-service'
+import isLogged from "@/utils/Auth";
 export default {
   name: 'Login',
   data() {
@@ -60,20 +61,28 @@ export default {
     {
       console.log("loginclicked");
       e.preventDefault() //prevent refreshing the page
-      this.$cookies.set("isLogged","true");
+
 
 
       const  form = {
         email: this.email,
         password: this.password,
       }
-      UsersService.login(form).then(
+      RecipeService.login(form).then(
           response =>
           {
-            console.log(response);
-            this.$router.push({
-              name: "Home"
-            })
+            if(response === "login_success")
+            {
+              this.$cookies.set("isLogged","true");
+              console.log(response);
+              this.$router.push({
+                name: "Home"
+
+              })
+            }
+             else {
+               console.log("unsuccessful login")
+            }
           }
 
       )
@@ -93,7 +102,7 @@ export default {
         password: this.password,
 
       }
-      UsersService.register(form).then(
+      RecipeService.register(form).then(
           response => {
             this.name = "";
             this.email = "";

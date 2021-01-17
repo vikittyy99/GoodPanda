@@ -1,38 +1,42 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:8080/app'
-class UsersService {
-    getALLUsers() {
-        return axios.get(API_URL + '/user')
+const API_URL = 'http://localHost:8080/recipe'
+
+class RecipeService {
+    getAllRecipes () {
+        return axios.get(API_URL + '/all') // .get, защото изпълнява get заявка; има и .post, .delete...
     }
 
-    getUsersPage(filters, currentPage, perPage) {
+    getAllIngredients () {
+        return axios.get(API_URL + '/ingredients')
+    }
+
+    getRecipesPage (filters, currentPage, perPage) {
         return axios.get(API_URL + '/search/page',
             {
                 params:
                     {
-                        city: filters.city,
                         name: filters.name,
-                        num: filters.num,
                         currentPage: currentPage,
                         perPage: perPage
                     }
             })
     }
-    saveUser(form) {
-        return axios.post(API_URL + '/save',
+    saveRecipe(form) {
+        return axios.get(API_URL + '/recipesave',
             {
-                id: form.id,
-                name: form.name,
-                num: form.num,
-                cityId: form.city.id,
+                params:
+                    {
+                        name: form.name,
+                        description: form.description,
+                    }
+
 
             })
 
     }
-
-    getUserById(id) {
-        return axios.get(API_URL + '/search/id',
+    deleteRecipeById(id) {
+        return axios.delete(API_URL + '/delete',
             {
                 params:
                     {
@@ -78,15 +82,7 @@ class UsersService {
     }
 
 
-    deleteUserById(id) {
-        return axios.delete(API_URL + '/delete',
-            {
-                params:
-                    {
-                        id: id
-                    }
-            })
-    }
-
 }
-export default new UsersService()
+
+
+export default new RecipeService()

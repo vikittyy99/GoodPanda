@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import User from '../views/User.vue'
-import UserTab from '../views/UserTab'
+
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
-import Blog from '../views/Blog.vue'
-import Dattebayp from '../views/Dattebayp.vue'
+import AddRecipe from '../views/AddRecipe.vue'
+import Recipe from '../views/Recipe.vue'
 import isLogged from "@/utils/Auth";
 
 Vue.use(VueRouter)
@@ -21,14 +20,7 @@ const routes = [
 
     component: Home
   },
-  {
-    path: '/user',
-    name: 'User',
-    meta:{
-      secure:true
-    },
-    component: User
-  },
+
   {
     path: '/login',
     name: 'Login',
@@ -46,29 +38,23 @@ const routes = [
     component: Register
   },
   {
-    path: '/userTab',
-    name: 'UserTab',
+    path: '/recipe',
+    name: 'Recipe',
     meta:{
       secure:true
     },
-    component: UserTab
+    component: Recipe
   },
   {
-    path: '/blog',
-    name: 'Blog',
+    path: '/addrecipe',
+    name: 'AddRecipe',
     meta:{
       secure:true
     },
-    component: Blog
+
+    component: AddRecipe
   },
-  {
-    path: '/dattebayp',
-    name: 'Dattebayp',
-    meta:{
-      secure:true
-    },
-    component: Dattebayp
-  },
+
   {
     path: '/about',
     name: 'About',

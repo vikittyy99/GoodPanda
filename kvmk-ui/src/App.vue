@@ -4,9 +4,11 @@
       <b-nav tabs>
       <b-nav-item><router-link to="/"> Home </router-link> </b-nav-item>
       <b-nav-item><router-link to="/about"> About </router-link> </b-nav-item>
-      <b-nav-item><router-link to="/user"> User </router-link> </b-nav-item>
+
       <b-nav-item><router-link to="/Login"> Login </router-link> </b-nav-item>
-      <b-nav-item><router-link to="/Register"> Register </router-link> </b-nav-item>
+      <b-nav-item><router-link to="/Register"> Register </router-link></b-nav-item>
+        <b-nav-item><router-link to="/AddRecipe"> AddRecipe </router-link> </b-nav-item>
+        <b-nav-item><router-link to="/Recipe"> Recipe </router-link> </b-nav-item>
       </b-nav>
     </div>
     <router-view/>

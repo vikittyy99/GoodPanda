@@ -11,11 +11,12 @@ import { CarouselPlugin } from 'bootstrap-vue'
 import { ImagePlugin } from 'bootstrap-vue'
 import { NavPlugin } from 'bootstrap-vue'
 import { CardPlugin } from 'bootstrap-vue'
-
+import { BootstrapVue } from 'bootstrap-vue'
 
 
 Vue.component('b-pagination', BPagination)
 Vue.component('b-table' , BTable)
+Vue.use(BootstrapVue)
 Vue.use(CardPlugin)
 Vue.use(NavPlugin)
 Vue.use(ImagePlugin)

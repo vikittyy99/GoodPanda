@@ -1,6 +1,5 @@
 package com.ekip.KVMK.Validation;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,10 +49,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new CustomUserDetailsService();
     }
 
-  /*  @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }*/
+    /*  @Bean
+      public BCryptPasswordEncoder passwordEncoder() {
+          return new BCryptPasswordEncoder();
+      }*/
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -83,18 +82,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/app/user").authenticated()
+                .antMatchers("/recipe/all").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .usernameParameter("email")
-                .defaultSuccessUrl("/app/users")
+                .defaultSuccessUrl("/recipe/all")
                 .permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/")
                 .permitAll();
 
     }
-    }
-
+}
 
