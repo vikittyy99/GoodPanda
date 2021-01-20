@@ -12,8 +12,9 @@ import { ImagePlugin } from 'bootstrap-vue'
 import { NavPlugin } from 'bootstrap-vue'
 import { CardPlugin } from 'bootstrap-vue'
 import { BootstrapVue } from 'bootstrap-vue'
+import { BContainer } from 'bootstrap-vue'
 
-
+Vue.component('b-container', BContainer)
 Vue.component('b-pagination', BPagination)
 Vue.component('b-table' , BTable)
 Vue.use(BootstrapVue)

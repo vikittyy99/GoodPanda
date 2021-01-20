@@ -60,6 +60,29 @@ public class Recipe implements java.io.Serializable{
     @OneToMany(mappedBy = "recipe_id")
     private List<Recipe_ingredient> recipe_ingredient;
 
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                "Рецепта за " + name + '\'' +
+                "Време за приготвяне: " + preptime + " минути" +
+                "Брой порции: " + serving +
+                "Начин на приготвяне: '" + description + '\'' +
+                "Преглеждания" + views +
+                "Категория" + category_id +
+                "Продукти" + IngredientsString() +
+
+                ", recipe_ingredient=" + recipe_ingredient +
+                '}';
+    }
+
+    private String IngredientsString() {
+        String result = "";
+        for(Ingredient i: ingredient)
+            result += i.getName();
+        return result;
+    }
+
     public Long getId() {
         return id;
     }
@@ -121,6 +144,18 @@ public class Recipe implements java.io.Serializable{
     }
 
     public void setRecipe_ingredient(List<Recipe_ingredient> recipe_ingredient) {
+        this.recipe_ingredient = recipe_ingredient;
+    }
+
+    public Recipe(Long id, String name, Integer preptime, Integer serving, String description, Integer views, Integer category_id, List<Ingredient> ingredient, List<Recipe_ingredient> recipe_ingredient) {
+        this.id = id;
+        this.name = name;
+        this.preptime = preptime;
+        this.serving = serving;
+        this.description = description;
+        this.views = views;
+        this.category_id = category_id;
+        this.ingredient = ingredient;
         this.recipe_ingredient = recipe_ingredient;
     }
 

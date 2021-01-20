@@ -8,15 +8,11 @@ import  com.ekip.KVMK.entities.Recipe;
 import  com.ekip.KVMK.entities.Recipe_ingredient;
 import  com.ekip.KVMK.entities.Users;
 import  com.ekip.KVMK.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -64,7 +60,7 @@ public class RecipeController {
 
         Pageable pageable = PageRequest.of(currentPage - 1, perPage);
 
-        Page<Recipe> recipes = ingredient==null?
+        Page<Recipe> recipes = ingredient.isBlank() || ingredient==null?
                 recipeRepository.findPageRecipes(
                         pageable,
                         name == null? "" : name.trim().toLowerCase()) :
@@ -81,12 +77,21 @@ public class RecipeController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @GetMapping("/search/id")
+    public Optional<Recipe> getRecipeById(@RequestParam(required = false) Long id)
+    {
+        Recipe recipe= recipeRepository.findRecipeById(id).get();
+        recipe.setViews(recipe.getViews()+1);
+        recipeRepository.save(recipe);
+
+        return recipeRepository.findRecipeById(id);
+    }
 
     @GetMapping("/search")
     public ResponseEntity<?> getRecipe(@RequestParam(required = false) String name){
 
         if(name == null || name.isBlank()) {
-            return ResponseEntity.ok().body("Не сте въвели име!");
+            return ResponseEntity.ok().body("За да видите рецептата ");
         }
 
         Optional<Recipe> result = recipeRepository.findRecipeByName(name.toLowerCase());
@@ -95,56 +100,58 @@ public class RecipeController {
         //return result.orElse(null);
     }
 
-     @GetMapping("/recipesave")
-  public ResponseEntity<?> recipeSave(Recipe recipe )
- {
-     recipeRepository.save(recipe);
-     System.out.println(recipe.getName());
-     System.out.println(recipe.getDescription());
-     return ResponseEntity.ok("saved");
 
- }
-  /*  @GetMapping("/save")
-    public ResponseEntity saveRecipe(){
+    @GetMapping("/save")
+    public ResponseEntity<?> saveRecipe(@RequestParam(required = false) String name,
+                                        @RequestParam(required = false) String ingr,
+                                        @RequestParam(required = false) String quan,
+                                        @RequestParam(required = false) Integer preptime,
+                                        @RequestParam(required = false) Integer serving,
+                                        @RequestParam(required = false) Integer category_id,
+                                        @RequestParam(required = false) String description,
+                                        @RequestParam(required = false) Long id,
+                                        Recipe recipe){
 
-        RecipeRequest form = new RecipeRequest();
+        //RecipeRequest form = new RecipeRequest();
         //проверка
-        List<String> arr =  new ArrayList<>();
-        arr.add("Мляко");
-        arr.add("Ориз");
+        List<String> arr =  Arrays.asList(ingr.split("\\s*,\\s*"));
+//        arr.add("Мляко");
+//        arr.add("Ориз");
+//        arr.add(ingr);
 
-        List<String> arr2 = new ArrayList<>();
-        arr2.add("1 л");
-        arr2.add("500 гр");
+        List<String> arr2 = Arrays.asList(quan.split("\\s*,\\s*"));
+//        arr2.add("1 л");
+//        arr2.add("500 гр");
+//        arr2.add(quan);
 
-        form.setCategory_id(3);
-        form.setDescription("Варите ориза в млякото.");
-        form.setIngredient(arr);
-        form.setName("Мляко с ориз");
-        form.setPreptime(20);
-        form.setRecipe_ingredient(arr2);
-        form.setServing(4);
-        form.setViews(0);
+//        form.setCategory_id(3);
+//        form.setDescription("Варите ориза в млякото.");
+//        form.setIngredient(arr);
+//        form.setName("Мляко с ориз");
+//        form.setPreptime(20);
+//        form.setRecipe_ingredient(arr2);
+//        form.setServing(4);
+//        form.setViews(0);
 
 
-        Boolean isNew = recipeRepository.findRecipeByName(form.getName().toLowerCase()).isEmpty();
+        Boolean isNew = recipeRepository.findRecipeByName(name.toLowerCase()).isEmpty();
 
         counter = 0;
 
-        Recipe recipe =
+        recipe =
                 new Recipe(
-                        isNew? form.getId() : recipeRepository.findRecipeByName(form.getName().toLowerCase()).get().getId(),
-                        form.getName(),
-                        form.getPreptime(),
-                        form.getServing(),
-                        form.getDescription(),
-                        form.getCategory_id());
+                        isNew? id : recipeRepository.findRecipeByName(name.toLowerCase()).get().getId(),
+                        name,
+                        preptime,
+                        serving,
+                        description,
+                        category_id);
 
         recipe = recipeRepository.save(recipe);
         Map<String, Object> response = new HashMap<>();
         response.put("generatedId", recipe.getId());
 
-        for(String i: form.getIngredient()){
+        for(String i: arr){
             Optional<Ingredient> ingredient = ingredientRepository.findIngredientByName(i.toLowerCase());
 
             Recipe_ingredient recipe_ingredient = new Recipe_ingredient();
@@ -161,7 +168,7 @@ public class RecipeController {
             }
 
             recipe_ingredient.setRecipe_id(recipe.getId());
-            recipe_ingredient.setQuantity(form.getRecipe_ingredient().get(counter));
+            recipe_ingredient.setQuantity(arr2.get(counter));
 
             recipe_ingredient = recipeIngredientRepository.save(recipe_ingredient);
             counter++;
@@ -177,7 +184,7 @@ public class RecipeController {
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-*/
+
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteRecipe(@RequestParam Long id){
@@ -188,13 +195,15 @@ public class RecipeController {
         recipeRepository.deleteById(id);
         return ResponseEntity.ok("Рецептата за " + name + " беше успешно изтрита!");
     }
-    @GetMapping("/register")
 
+    /*BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();*/
+
+    @GetMapping("/register")
     public ResponseEntity<String> Registration (Users users)
     {
-     /*   BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        users.setPassword(passwordEncoder.encode(users.getPassword()));*/
-
+      /*  BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
+*/
 
         userRepository.save(users);
         System.out.println(users);
@@ -207,9 +216,10 @@ public class RecipeController {
     public ResponseEntity<String> Login (Users users)
     {
 
+
         String email = users.getEmail();
 
-      String password = users.getPassword();
+        String password = users.getPassword();
 
         Users user = userLogin.authenticate(email, password);
 

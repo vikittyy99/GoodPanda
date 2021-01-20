@@ -20,6 +20,13 @@ public class Recipe_ingredient implements java.io.Serializable{
     @Column(name = "quantity")
     private String quantity;
 
+    @Override
+    public String toString() {
+        return "Количество{" +
+                "" + quantity + '\'' +
+                '}';
+    }
+
     public Long getRecipe_id() {
         return recipe_id;
     }

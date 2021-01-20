@@ -8,8 +8,8 @@
         controls
         indicators
         background-color="#2c3e50"
-        img-width="1100"
-        img-height="600"
+        img-width="550"
+        img-height="300"
         style="text-shadow: 1px 1px 2px #333;"
         @sliding-start="onSlideStart"
         @sliding-end="onSlideEnd"
@@ -107,19 +107,19 @@
 <script>
 export default {
   name: 'home',
-  data() {
+  data () {
     return {
       slide: 0,
       sliding: null
     }
   },
   methods: {
-    onSlideStart(slide) {
+    onSlideStart (slide) {
       this.sliding = true
     },
-    onSlideEnd(slide) {
+    onSlideEnd (slide) {
       this.sliding = false
     }
-  },
+  }
 }
 </script>

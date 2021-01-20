@@ -2,13 +2,12 @@
   <div id="app">
     <div id="nav">
       <b-nav tabs>
-      <b-nav-item><router-link to="/"> Home </router-link> </b-nav-item>
-      <b-nav-item><router-link to="/about"> About </router-link> </b-nav-item>
-
-      <b-nav-item><router-link to="/Login"> Login </router-link> </b-nav-item>
-      <b-nav-item><router-link to="/Register"> Register </router-link></b-nav-item>
-        <b-nav-item><router-link to="/AddRecipe"> AddRecipe </router-link> </b-nav-item>
-        <b-nav-item><router-link to="/Recipe"> Recipe </router-link> </b-nav-item>
+      <b-nav-item><router-link to="/"> Начало </router-link> </b-nav-item>
+      <b-nav-item><router-link to="/about"> Блог </router-link> </b-nav-item>
+        <b-nav-item><router-link to="/AddRecipe"> Добави рецепта </router-link> </b-nav-item>
+        <b-nav-item><router-link to="/Recipe"> Рецепти </router-link> </b-nav-item>
+        <b-nav-item><router-link to="/Login"> Вход </router-link> </b-nav-item>
+        <b-nav-item><router-link to="/Register"> Регистрация </router-link></b-nav-item>
       </b-nav>
     </div>
     <router-view/>
@@ -16,23 +15,17 @@
     <template>
       <!-- Footer -->
       <footer class="bg-light text-center text-lg-start">
-        <!-- Grid container -->
         <div class="container p-4">
-          <!--Grid row-->
           <div class="row">
-            <!--Grid column-->
             <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
               <h5 class="text-uppercase">GoodPanda</h5>
 
               <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-                molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae aliquam
-                voluptatem veniam, est atque cumque eum delectus sint!
+                Ако се чудите какво вкусно ястие да си приготвите, GoodPanda е правилният избор!
+                Тук ще намирите най-добрите рецепти от цял свят.Побързайте и се потопете в магията на готвенето.
               </p>
             </div>
-            <!--Grid column-->
 
-            <!--Grid column-->
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
               <h5 class="text-uppercase">SiteMap</h5>
 
@@ -51,9 +44,7 @@
                 </li>
               </ul>
             </div>
-            <!--Grid column-->
 
-            <!--Grid column-->
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
               <h5 class="text-uppercase mb-0">Contact us</h5>
 
@@ -67,16 +58,10 @@
                 <li>
                   <a href="#!" class="text-dark">Somewhere in LA I am not sure where yet ;)</a>
                 </li>
-<!--                <li>
-                  <a href="#!" class="text-dark">Link 4</a>
-                </li>-->
               </ul>
             </div>
-            <!--Grid column-->
           </div>
-          <!--Grid row-->
         </div>
-        <!-- Grid container -->
 
         <!-- Copyright -->
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
@@ -106,16 +91,17 @@
   margin-left: 0;
   margin-right: 0;
   padding: 0;
-  background-color: #f8f8f8;
+  background-color: #f5b47e;
 }
 
 #nav a {
   font-weight: bold;
+  font-family: "Georgia";
   color: #262626;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #896856;
 }
 </style>
 

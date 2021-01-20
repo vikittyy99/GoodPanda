@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import AddRecipe from '../views/AddRecipe.vue'
 import Recipe from '../views/Recipe.vue'
+import RecipeTab from '../views/RecipeTab.vue'
 import isLogged from "@/utils/Auth";
 
 Vue.use(VueRouter)
@@ -44,6 +44,14 @@ const routes = [
       secure:true
     },
     component: Recipe
+  },
+  {
+    path: '/recipeTab',
+    name: 'RecipeTab',
+    meta:{
+      secure:true
+    },
+    component: RecipeTab
   },
   {
     path: '/addrecipe',

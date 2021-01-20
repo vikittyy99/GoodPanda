@@ -16,11 +16,15 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     @Query("SELECT r FROM Recipe r " +
             "WHERE lower(r.name) " +
-            "LIKE :#{#name == null || #name.isEmpty()? '%' : '%'+#name+'%'} ")
+            "LIKE :#{#name == null || #name.isEmpty()? '%' : '%'+#name+'%'} " +
+            "ORDER BY r.views DESC")
     Page<Recipe> findPageRecipes(Pageable pageable, String name);
 
     @Query("SELECT r FROM Recipe r LEFT JOIN r.ingredient i " +
             "WHERE lower(i.name) " +
-            "LIKE :#{#ingredient == null || #ingredient.isEmpty()? '%' : '%'+#ingredient+'%'} ")
+            "LIKE :#{#ingredient == null || #ingredient.isEmpty()? '%' : '%'+#ingredient+'%'} " +
+             "ORDER BY r.views DESC")
     Page<Recipe> findPageRecipes(String ingredient, Pageable pageable);
+
+    Optional<Recipe> findRecipeById(Long id);
 }
